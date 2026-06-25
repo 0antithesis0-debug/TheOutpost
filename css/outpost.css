@@ -915,118 +915,185 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================================
-   SEASONAL OPERATIONS
+   SITE SCENARIOS + SEASONAL OPERATIONS
    ============================================================ */
 .seasonal {
-  padding: 6rem 0;
+  padding: 6rem 0 0;
   background: var(--coal);
 }
 .seasonal-intro {
   font-size: 0.97rem;
   color: var(--cream-muted);
-  max-width: 64ch;
+  max-width: 68ch;
   line-height: 1.8;
   margin-bottom: 3rem;
 }
-.seasonal-grid {
+
+/* Scenario column headers */
+.scenarios-header-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 2.5rem;
+  gap: 2px;
+  margin-bottom: 2px;
+  background: var(--iron);
 }
-.seasonal-col {
-  border: 1px solid var(--iron);
-  border-radius: var(--radius);
-  overflow: hidden;
+.scenario-header {
+  padding: 1.25rem 2rem;
 }
-.seasonal-season-head {
-  padding: 1.1rem 1.5rem;
+.scenario-header.rural-header { background: rgba(139,69,19,0.15); }
+.scenario-header.city-header  { background: rgba(61,53,48,0.5); }
+.scenario-header-label {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ember);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.scenario-header p {
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+  line-height: 1.5;
+}
+
+/* Season band labels */
+.season-band {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  border-bottom: 1px solid var(--iron);
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
-.seasonal-season-head.warm { background: rgba(200, 90, 26, 0.12); }
-.seasonal-season-head.cold { background: rgba(100, 140, 180, 0.1); }
-.seasonal-icon { font-size: 1rem; }
-.seasonal-season-head h3 {
-  font-family: var(--font-ui);
-  font-size: 0.78rem;
+.warm-band     { background: rgba(200,90,26,0.14); border-top: 1px solid rgba(200,90,26,0.3); border-bottom: 1px solid rgba(200,90,26,0.3); }
+.shoulder-band { background: rgba(201,146,26,0.10); border-top: 1px solid rgba(201,146,26,0.3); border-bottom: 1px solid rgba(201,146,26,0.3); }
+.winter-band   { background: rgba(100,130,180,0.10); border-top: 1px solid rgba(100,130,180,0.25); border-bottom: 1px solid rgba(100,130,180,0.25); }
+.season-band-label {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+.season-band-icon { font-size: 1.1rem; }
+.season-band-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
   font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
   color: var(--cream);
-  flex: 1;
+  display: block;
+  line-height: 1.1;
 }
-.seasonal-months {
+.season-band-months {
   font-family: var(--font-ui);
   font-size: 0.62rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--iron-light);
-}
-.seasonal-body { padding: 1.5rem; }
-.seasonal-desc {
-  font-size: 0.88rem;
   color: var(--cream-muted);
-  line-height: 1.65;
-  margin-bottom: 1.25rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--iron);
+  display: block;
 }
-.seasonal-list {
-  list-style: none;
+.season-band-specs {
   display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
-.seasonal-list li {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  padding-left: 1rem;
-  position: relative;
-}
-.seasonal-list li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.5rem;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--ember);
-}
-.seasonal-item-head {
+.season-band-specs span {
   font-family: var(--font-ui);
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--cream);
+  color: var(--cream-muted);
 }
-.seasonal-item-detail {
+.spec-div { color: var(--iron-light) !important; }
+
+/* Image pairs */
+.scenario-image-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--iron);
+  margin-bottom: 2px;
+}
+.scenario-image-block {
+  position: relative;
+  overflow: hidden;
+}
+.scenario-image-block img {
+  width: 100%;
+  height: clamp(280px, 32vw, 440px);
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.scenario-image-block:hover img { transform: scale(1.02); }
+.scenario-image-caption {
+  padding: 0.9rem 1.25rem;
+  background: var(--coal-mid);
   font-size: 0.82rem;
   color: var(--cream-muted);
   line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
+
+/* Winter single image */
+.scenario-image-single {
+  background: var(--iron);
+  margin-bottom: 2px;
+}
+.scenario-image-single img {
+  width: 100%;
+  height: clamp(320px, 38vw, 520px);
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+}
+.winter-caption {
+  padding: 1rem 1.5rem;
+  background: var(--coal-mid);
+}
+
+/* Caption tags */
+.caption-tag {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 2px;
+  margin-bottom: 0.1rem;
+  align-self: flex-start;
+}
+.rural-tag  { background: rgba(139,69,19,0.25); color: #d4894a; border: 1px solid rgba(139,69,19,0.4); }
+.city-tag   { background: rgba(61,53,48,0.6);   color: var(--cream-muted); border: 1px solid var(--iron-light); }
+.winter-tag { background: rgba(100,130,180,0.2); color: #9ab4d4; border: 1px solid rgba(100,130,180,0.35); }
+
+/* Stats block */
 .seasonal-revenue-note {
   border: 1px solid var(--iron);
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--coal-mid);
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 .seasonal-revenue-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 1px;
   background: var(--iron);
   border-bottom: 1px solid var(--iron);
 }
 .seasonal-stat {
   background: var(--coal-light);
-  padding: 1.5rem 1rem;
+  padding: 1.4rem 1rem;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -1035,14 +1102,14 @@ a { color: inherit; text-decoration: none; }
 }
 .seasonal-stat-num {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 900;
   color: var(--ember);
   line-height: 1;
 }
 .seasonal-stat-label {
   font-family: var(--font-ui);
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1052,13 +1119,9 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.88rem;
   color: var(--cream-muted);
   line-height: 1.75;
-  padding: 1.5rem;
+  padding: 1.4rem 1.5rem;
 }
-.risk-link {
-  color: var(--ember);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
+.risk-link { color: var(--ember); text-decoration: underline; text-underline-offset: 3px; }
 .risk-link:hover { color: var(--ember-light); }
 
 /* ============================================================
@@ -1335,9 +1398,11 @@ a { color: inherit; text-decoration: none; }
   .concept-grid,
   .market-grid,
   .financials-scenarios,
-  .seasonal-grid,
   .story-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-  .seasonal-revenue-grid { grid-template-columns: 1fr 1fr; }
+  .scenarios-header-row,
+  .scenario-image-pair { grid-template-columns: 1fr; }
+  .seasonal-revenue-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .season-band { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
   .menu-grid { grid-template-columns: 1fr; }
   .menu-sides-row { grid-template-columns: 1fr; }
   .menu-sides-block + .menu-sides-block { border-left: none; border-top: 1px solid var(--iron); }
@@ -1367,6 +1432,8 @@ a { color: inherit; text-decoration: none; }
   .timeline-marker { display: none; }
   .signup-form { flex-direction: column; }
   .signup-form .btn { width: 100%; text-align: center; }
+  .seasonal-revenue-grid { grid-template-columns: 1fr 1fr; }
+  .season-band-specs { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
