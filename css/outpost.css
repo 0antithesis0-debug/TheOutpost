@@ -130,16 +130,14 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-brand {
   display: flex;
-  flex-direction: column;
-  line-height: 1.1;
+  align-items: center;
+  gap: 0.75rem;
 }
-.nav-brand-iron {
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--cream-muted);
+.nav-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 50%;
 }
 .nav-brand-outpost {
   font-family: var(--font-display);
@@ -214,18 +212,44 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   align-items: flex-start;
   padding: 8rem var(--gutter) 5rem;
+  max-width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  background-image: url('../images/Outside.png');
+  background-size: cover;
+  background-position: center 40%;
+  z-index: 0;
+  transform: scale(1.03);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(15, 11, 8, 0.88) 0%,
+    rgba(15, 11, 8, 0.70) 50%,
+    rgba(15, 11, 8, 0.40) 100%
+  );
+  z-index: 1;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
   max-width: var(--max-w);
   margin: 0 auto;
-  position: relative;
+  width: 100%;
+  padding: 0 var(--gutter);
 }
-.hero-texture {
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 70% 40%, rgba(200, 90, 26, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 20% 80%, rgba(139, 69, 19, 0.06) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: -1;
+.hero-logo {
+  width: clamp(100px, 14vw, 160px);
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 4px 24px rgba(200, 90, 26, 0.4));
 }
 .hero-eyebrow {
   font-family: var(--font-ui);
@@ -234,7 +258,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--ember);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   display: block;
 }
 .hero-headline {
@@ -268,11 +292,12 @@ a { color: inherit; text-decoration: none; }
 .hero-scroll-hint {
   position: absolute;
   bottom: 2.5rem;
-  left: var(--gutter);
+  left: calc(var(--gutter) + (100% - var(--max-w)) / 2);
   display: flex;
   align-items: center;
   gap: 1rem;
   opacity: 0.4;
+  z-index: 2;
 }
 .hero-scroll-hint span {
   font-family: var(--font-ui);
@@ -376,6 +401,20 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0;
   color: var(--cream-muted);
 }
+.concept-outside-img {
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1px;
+  border: 1px solid var(--iron);
+  max-height: 260px;
+}
+.concept-outside-img img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
 .concept-stat-block {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -413,27 +452,51 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   color: var(--cream-muted);
 }
-.concept-tagline-block {
-  background: var(--coal-light);
-  border: 1px solid var(--iron);
-  border-radius: var(--radius);
-  padding: 1.75rem;
-  margin-top: 1px;
-}
-.concept-tagline-block p {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-style: italic;
-  color: var(--gold-light);
-  line-height: 1.5;
-}
-
 /* ============================================================
    MENU
    ============================================================ */
 .menu-section {
-  padding: 7rem 0;
+  padding: 0 0 7rem;
   background: var(--coal);
+}
+.menu-food-banner {
+  position: relative;
+  width: 100%;
+  height: clamp(280px, 40vw, 480px);
+  overflow: hidden;
+  margin-bottom: 4rem;
+}
+.menu-food-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+}
+.menu-food-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 11, 8, 0.3) 0%,
+    rgba(15, 11, 8, 0.75) 70%,
+    rgba(15, 11, 8, 1) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 3rem var(--gutter) 2.5rem;
+  text-align: center;
+}
+.menu-food-banner-overlay .section-eyebrow {
+  margin-bottom: 0.5rem;
+}
+.menu-food-banner-overlay .section-heading {
+  margin-bottom: 0.75rem;
+}
+.menu-food-banner-overlay .menu-intro {
+  margin-bottom: 0;
 }
 .menu-intro {
   font-size: 1rem;
@@ -582,10 +645,31 @@ a { color: inherit; text-decoration: none; }
    STORY
    ============================================================ */
 .story {
-  background: var(--coal-mid);
+  position: relative;
   padding: 7rem 0;
+  overflow: hidden;
+}
+.story-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.story-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(15, 11, 8, 0.92) 0%,
+    rgba(15, 11, 8, 0.80) 50%,
+    rgba(15, 11, 8, 0.65) 100%
+  );
+  z-index: 1;
 }
 .story-inner {
+  position: relative;
+  z-index: 2;
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--gutter);
@@ -739,6 +823,12 @@ a { color: inherit; text-decoration: none; }
   font-weight: 700;
   font-style: italic;
   color: var(--ember-light);
+}
+.footer-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
 }
 .footer-brand-tag,
 .footer-brand-region {
