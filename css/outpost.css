@@ -29,7 +29,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   background: var(--coal);
   color: var(--cream);
@@ -37,6 +37,7 @@ body {
   font-size: 16px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -144,6 +145,7 @@ a { color: inherit; text-decoration: none; }
   transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--cream); }
+.nav-links a.nav-active { color: var(--ember-light); }
 .nav-links .nav-cta {
   background: var(--ember);
   color: var(--white);
@@ -443,6 +445,7 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   overflow: hidden;
   white-space: nowrap;
+  width: 100%;
 }
 .brand-strip span {
   font-family: var(--font-ui);
@@ -507,9 +510,14 @@ a { color: inherit; text-decoration: none; }
   font-weight: 700;
 }
 .market-list li strong { color: var(--cream); }
-.competitive-table-wrap { margin-top: 3rem; }
+.competitive-table-wrap {
+  margin-top: 3rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .competitive-table {
   width: 100%;
+  min-width: 560px;
   border-collapse: collapse;
   font-size: 0.88rem;
 }
@@ -882,9 +890,13 @@ a { color: inherit; text-decoration: none; }
   gap: 2rem;
   margin-top: 3rem;
 }
-.proj-table-wrap { }
+.proj-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .proj-table {
   width: 100%;
+  min-width: 400px;
   border-collapse: collapse;
   font-size: 0.86rem;
   margin-top: 1rem;
@@ -1315,11 +1327,12 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--iron);
   color: var(--cream);
   font-family: var(--font-body);
-  font-size: 0.92rem;
+  font-size: 1rem; /* must be ≥16px to prevent iOS auto-zoom */
   padding: 0.82rem 1.2rem;
   border-radius: var(--radius);
   outline: none;
   transition: border-color 0.2s;
+  -webkit-appearance: none; /* removes iOS default styling */
 }
 .signup-form input::placeholder { color: var(--iron-light); }
 .signup-form input:focus { border-color: var(--ember); }
@@ -1387,55 +1400,213 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================================
-   RESPONSIVE
+   RESPONSIVE — Comprehensive multi-device coverage
+   Breakpoints: 1100px tablet-landscape · 860px tablet · 640px mobile · 400px small mobile
    ============================================================ */
-@media (max-width: 1000px) {
-  .why-grid { grid-template-columns: 1fr 1fr; }
-  .projections-grid { grid-template-columns: 1fr; }
+
+/* --- 1100px: Large tablet landscape, small laptop --- */
+@media (max-width: 1100px) {
+  .why-grid           { grid-template-columns: 1fr 1fr; }
+  .projections-grid   { grid-template-columns: 1fr; }
+  .nav-links          { gap: 1.25rem; }
+  .nav-links a        { font-size: 0.7rem; }
+  .snapshot-item      { padding: 1.25rem 1.5rem; }
+  .snapshot-num       { font-size: 1.25rem; }
 }
 
+/* --- 860px: Tablet portrait, most phones landscape --- */
 @media (max-width: 860px) {
+
+  /* Layout grids → single column */
   .concept-grid,
   .market-grid,
   .financials-scenarios,
-  .story-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .story-inner        { grid-template-columns: 1fr; gap: 2.5rem; }
+
+  /* Scenario images → stack */
   .scenarios-header-row,
-  .scenario-image-pair { grid-template-columns: 1fr; }
-  .seasonal-revenue-grid { grid-template-columns: 1fr 1fr 1fr; }
-  .season-band { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-  .menu-grid { grid-template-columns: 1fr; }
-  .menu-sides-row { grid-template-columns: 1fr; }
+  .scenario-image-pair { grid-template-columns: 1fr; gap: 2px; }
+
+  /* Seasonal stats → 3 col */
+  .seasonal-revenue-grid { grid-template-columns: repeat(3, 1fr); }
+  .season-band        { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+
+  /* Menu */
+  .menu-grid          { grid-template-columns: 1fr; }
+  .menu-sides-row     { grid-template-columns: 1fr; }
   .menu-sides-block + .menu-sides-block { border-left: none; border-top: 1px solid var(--iron); }
-  .risk-row { grid-template-columns: 1fr 1fr; }
-  .risk-row > span:last-child { grid-column: 1 / -1; }
-  .story-marks { flex-direction: row; }
-  .story-mark { writing-mode: horizontal-tb; padding: 0 0.5rem; }
-  .story-mark-divider { width: 24px; height: 1px; align-self: center; }
-  .footer-inner { flex-direction: column; }
-  .footer-tagline { text-align: left; }
-  .snapshot-strip { justify-content: flex-start; overflow-x: auto; }
-  .snapshot-div { display: none; }
+
+  /* Risk table → 2 col, description wraps full width */
+  .risk-row           { grid-template-columns: 1fr auto; row-gap: 0.4rem; }
+  .risk-row > span:last-child { grid-column: 1 / -1; color: var(--cream-muted); }
+  .risk-row--head     { display: none; }
+
+  /* Story marks → horizontal */
+  .story-marks        { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .story-mark         { writing-mode: horizontal-tb; padding: 0.25rem 0.75rem; font-size: 0.58rem; }
+  .story-mark-divider { width: 1px; height: 20px; align-self: center; }
+
+  /* Footer */
+  .footer-inner       { flex-direction: column; }
+  .footer-tagline     { text-align: left; }
+
+  /* Snapshot strip → scrollable */
+  .snapshot-strip     { justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0; }
+  .snapshot-div       { display: none; }
+  .snapshot-item      { padding: 1.1rem 1.5rem; flex-shrink: 0; }
+
+  /* Competitive table → horizontally scrollable */
+  .competitive-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .competitive-table  { min-width: 560px; }
+
+  /* Projection tables → scrollable */
+  .proj-table-wrap    { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .proj-table         { min-width: 480px; }
+
+  /* Funding bars */
+  .funding-bar-item   { grid-template-columns: 1fr; gap: 0.35rem; }
+  .funding-bar-amt    { text-align: right; }
+
+  /* Why cards → 2 col */
+  .why-grid           { grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  /* Section padding reduction */
+  .concept, .market, .story, .menu-section,
+  .financials, .seasonal, .why,
+  .timeline-section, .risk, .contact { padding-top: 4rem; padding-bottom: 4rem; }
+
+  /* Image heights */
+  .concept-outside-img img   { height: 200px; }
+  .menu-food-banner          { height: clamp(220px, 35vw, 360px); }
+  .scenario-image-block img  { height: clamp(200px, 45vw, 360px); }
+  .scenario-image-single img { height: clamp(240px, 50vw, 400px); }
+
+  /* Hero section padding */
+  .hero-content { padding-top: 6rem; padding-bottom: 4rem; }
 }
 
+/* --- 640px: Mobile phones --- */
 @media (max-width: 640px) {
-  :root { --gutter: 1.25rem; }
-  .nav-links { display: none; }
-  .nav-hamburger { display: flex; }
-  .hero-content { flex-direction: column-reverse; padding-top: 7rem; gap: 2rem; }
-  .hero-right { width: 100%; justify-content: flex-start; }
-  .hero-logo { width: clamp(120px, 40vw, 180px); }
-  .hero-headline { font-size: clamp(2.8rem, 11vw, 4.5rem); }
+  :root { --gutter: 1.1rem; }
+
+  /* Nav */
+  .nav-links      { display: none; }
+  .nav-hamburger  { display: flex; }
+  .nav-inner      { height: 56px; }
+
+  /* Hero */
+  .hero-content   { flex-direction: column-reverse; padding-top: 6rem; padding-bottom: 3rem; gap: 1.5rem; }
+  .hero-right     { width: 100%; justify-content: center; }
+  .hero-logo      { width: clamp(110px, 38vw, 160px); margin: 0 auto; }
+  .hero-headline  { font-size: clamp(2.4rem, 10vw, 3.5rem); }
+  .hero-sub       { font-size: 0.92rem; }
   .hero-scroll-hint { display: none; }
-  .why-grid { grid-template-columns: 1fr; }
-  .timeline::before { display: none; }
-  .timeline-item { grid-template-columns: 1fr; }
-  .timeline-marker { display: none; }
-  .signup-form { flex-direction: column; }
-  .signup-form .btn { width: 100%; text-align: center; }
+  .hero-actions   { flex-direction: column; gap: 0.75rem; }
+  .hero-actions .btn { text-align: center; }
+
+  /* Snapshot */
+  .snapshot-num   { font-size: 1.1rem; }
+  .snapshot-label { font-size: 0.58rem; }
+  .snapshot-item  { padding: 1rem 1.1rem; }
+
+  /* Section headings */
+  .section-heading { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+
+  /* Concept pillars → 2x2 */
+  .concept-pillars { grid-template-columns: 1fr 1fr; display: grid; gap: 0.75rem; }
+  .concept-stat-block { margin-top: 0; }
+
+  /* Market */
+  .market-grid    { gap: 2rem; }
+
+  /* Competitive table label columns hide on very small */
+  .competitive-table th:nth-child(2),
+  .competitive-table td:nth-child(2) { display: none; }
+
+  /* Scenario headers collapse */
+  .scenarios-header-row { grid-template-columns: 1fr; }
+  .scenario-header      { padding: 0.9rem 1.1rem; }
   .seasonal-revenue-grid { grid-template-columns: 1fr 1fr; }
+  .seasonal-stat-num    { font-size: 1.1rem; }
+
+  /* Season band */
   .season-band-specs { display: none; }
+  .season-band       { padding: 0.85rem 1.1rem; }
+
+  /* Image heights mobile */
+  .scenario-image-block img  { height: clamp(180px, 55vw, 280px); }
+  .scenario-image-single img { height: clamp(200px, 60vw, 320px); }
+  .menu-food-banner          { height: clamp(180px, 50vw, 280px); }
+
+  /* Financials */
+  .financials-scenarios { gap: 1.5rem; }
+  .scenario-range       { font-size: 1.5rem; }
+  .funding-row          { padding: 1.25rem; }
+
+  /* Why cards → single column */
+  .why-grid { grid-template-columns: 1fr; }
+  .why-card { padding: 1.25rem; }
+  .why-num  { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+  /* Timeline */
+  .timeline::before   { display: none; }
+  .timeline-item      { grid-template-columns: 1fr; gap: 0.5rem; }
+  .timeline-marker    { display: none; }
+  .timeline-content h3 { font-size: 1rem; }
+
+  /* Risk */
+  .risk-row { grid-template-columns: 1fr; gap: 0.3rem; padding: 0.9rem 1rem; }
+  .risk-row > span:first-child { color: var(--cream); font-weight: 500; }
+  .risk-tag { align-self: flex-start; }
+
+  /* Menu */
+  .menu-cat-head    { padding: 0.8rem 1rem; }
+  .menu-item        { padding: 0.8rem 1rem; }
+  .menu-sides-block { padding: 1.1rem 1rem; }
+
+  /* Signup form */
+  .signup-form { flex-direction: column; gap: 0.6rem; }
+  .signup-form input { min-width: 0; width: 100%; }
+  .signup-form .btn  { width: 100%; text-align: center; }
+
+  /* Footer */
+  .footer-bottom { flex-direction: column; gap: 0.5rem; }
+  .footer-bottom span { font-size: 0.65rem; }
+}
+
+/* --- 400px: Small phones (iPhone SE, Galaxy A series) --- */
+@media (max-width: 400px) {
+  :root { --gutter: 0.9rem; }
+
+  .hero-headline      { font-size: clamp(2rem, 11vw, 2.8rem); }
+  .hero-logo          { width: 100px; }
+  .section-heading    { font-size: clamp(1.4rem, 7vw, 1.9rem); }
+  .snapshot-item      { padding: 0.85rem 0.9rem; }
+  .snapshot-num       { font-size: 1rem; }
+  .concept-pillars    { grid-template-columns: 1fr 1fr; }
+  .seasonal-revenue-grid { grid-template-columns: 1fr 1fr; }
+  .seasonal-stat-num  { font-size: 1rem; }
+  .btn                { padding: 0.75rem 1.5rem; font-size: 0.78rem; }
+
+  /* Tables — hide extra columns to prevent overflow */
+  .competitive-table th:nth-child(3),
+  .competitive-table td:nth-child(3),
+  .competitive-table th:nth-child(4),
+  .competitive-table td:nth-child(4) { display: none; }
+
+  .risk-row { padding: 0.75rem 0.9rem; }
+  .scenario-image-block img  { height: clamp(160px, 60vw, 240px); }
+  .scenario-image-single img { height: clamp(180px, 65vw, 280px); }
+  .menu-food-banner          { height: clamp(160px, 55vw, 240px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* Touch target minimum sizes */
+@media (hover: none) {
+  .btn           { min-height: 48px; display: flex; align-items: center; justify-content: center; }
+  .nav-mobile a  { min-height: 48px; display: flex; align-items: center; }
+  .nav-hamburger { min-width: 44px; min-height: 44px; justify-content: center; align-items: center; }
 }
