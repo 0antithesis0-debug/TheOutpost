@@ -915,6 +915,153 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================================
+   SEASONAL OPERATIONS
+   ============================================================ */
+.seasonal {
+  padding: 6rem 0;
+  background: var(--coal);
+}
+.seasonal-intro {
+  font-size: 0.97rem;
+  color: var(--cream-muted);
+  max-width: 64ch;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+.seasonal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+.seasonal-col {
+  border: 1px solid var(--iron);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.seasonal-season-head {
+  padding: 1.1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--iron);
+}
+.seasonal-season-head.warm { background: rgba(200, 90, 26, 0.12); }
+.seasonal-season-head.cold { background: rgba(100, 140, 180, 0.1); }
+.seasonal-icon { font-size: 1rem; }
+.seasonal-season-head h3 {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cream);
+  flex: 1;
+}
+.seasonal-months {
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--iron-light);
+}
+.seasonal-body { padding: 1.5rem; }
+.seasonal-desc {
+  font-size: 0.88rem;
+  color: var(--cream-muted);
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--iron);
+}
+.seasonal-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.seasonal-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-left: 1rem;
+  position: relative;
+}
+.seasonal-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ember);
+}
+.seasonal-item-head {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.seasonal-item-detail {
+  font-size: 0.82rem;
+  color: var(--cream-muted);
+  line-height: 1.6;
+}
+.seasonal-revenue-note {
+  border: 1px solid var(--iron);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--coal-mid);
+}
+.seasonal-revenue-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--iron);
+  border-bottom: 1px solid var(--iron);
+}
+.seasonal-stat {
+  background: var(--coal-light);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+.seasonal-stat-num {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--ember);
+  line-height: 1;
+}
+.seasonal-stat-label {
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+}
+.seasonal-footnote {
+  font-size: 0.88rem;
+  color: var(--cream-muted);
+  line-height: 1.75;
+  padding: 1.5rem;
+}
+.risk-link {
+  color: var(--ember);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.risk-link:hover { color: var(--ember-light); }
+
+/* ============================================================
    WHY
    ============================================================ */
 .why {
@@ -1188,7 +1335,9 @@ a { color: inherit; text-decoration: none; }
   .concept-grid,
   .market-grid,
   .financials-scenarios,
+  .seasonal-grid,
   .story-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .seasonal-revenue-grid { grid-template-columns: 1fr 1fr; }
   .menu-grid { grid-template-columns: 1fr; }
   .menu-sides-row { grid-template-columns: 1fr; }
   .menu-sides-block + .menu-sides-block { border-left: none; border-top: 1px solid var(--iron); }
