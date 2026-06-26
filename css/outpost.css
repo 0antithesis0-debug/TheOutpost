@@ -333,6 +333,94 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================================
+   PHASE PROGRESSION TRACK
+   ============================================================ */
+.phases {
+  padding: 5rem 0;
+  background: var(--coal-light);
+  border-bottom: 1px solid var(--iron);
+}
+.phases-intro {
+  font-size: 0.97rem;
+  color: var(--cream-muted);
+  max-width: 58ch;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+.phase-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  position: relative;
+}
+.phase-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+.phase-node-marker {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--coal);
+  border: 2px solid var(--iron);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+.phase-node-marker--active {
+  border-color: var(--ember);
+  background: rgba(200,90,26,0.15);
+  box-shadow: 0 0 20px rgba(200,90,26,0.3);
+}
+.phase-num {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--iron-light);
+}
+.phase-node-marker--active .phase-num { color: var(--ember); }
+.phase-node-content {
+  text-align: center;
+  padding: 0 1rem;
+}
+.phase-node-label {
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ember);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.phase-node-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 0.4rem;
+}
+.phase-node-content p {
+  font-size: 0.82rem;
+  color: var(--cream-muted);
+  line-height: 1.65;
+}
+.phase-connector {
+  flex-shrink: 0;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(to right, var(--iron), var(--ember));
+  margin-top: 25px;
+  align-self: flex-start;
+}
+
+/* ============================================================
    CONCEPT
    ============================================================ */
 .concept {
@@ -1678,6 +1766,12 @@ a { color: inherit; text-decoration: none; }
 
 /* --- 860px: Tablet portrait, most phones landscape --- */
 @media (max-width: 860px) {
+
+  /* Phase track → vertical */
+  .phase-track { flex-direction: column; align-items: flex-start; gap: 2rem; }
+  .phase-connector { width: 2px; height: 32px; margin-top: 0; margin-left: 25px; background: linear-gradient(to bottom, var(--iron), var(--ember)); }
+  .phase-node { flex-direction: row; align-items: flex-start; gap: 1.25rem; }
+  .phase-node-content { text-align: left; padding: 0; }
 
   /* Layout grids → single column */
   .concept-grid,
